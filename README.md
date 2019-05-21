@@ -1,5 +1,12 @@
 # Perceptron vs SVM
 
+## Problem 1
+The datasets we will be working on look like this:
+1. A
+![](./plots/points-p1-a.png)
+1. B
+![](./plots/points-p1-b.png)
+
 Homework and data taken from:
 
     @course-materials{6.867 Machine Learning Fall,
