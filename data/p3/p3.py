@@ -11,10 +11,10 @@ def load_data(path):
 
 
 def train(data, labels):
-    svm = SVC()
+    svm = SVC(C=3.0)
     start = time.time()
     svm.fit(data, labels)
-    print(f'Training time: {time.time()-start}')
+    print(f'Training time: {time.time() - start}')
     return svm
 
 
@@ -27,4 +27,6 @@ if __name__ == '__main__':
     print(test_y - predict_y)
     print(test_y)
     print(predict_y)
+    unique, counts = numpy.unique(numpy.array(list(map(lambda t: t == 0, test_y - predict_y))), return_counts=True)
+    print(dict(zip(unique, counts)))
     exit(0)
