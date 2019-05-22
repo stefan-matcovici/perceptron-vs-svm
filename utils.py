@@ -25,5 +25,4 @@ def plot_points(df):
 
 def save_plot(filename, extension="eps"):
     file_path = os.path.join("plots", f"{filename}.{extension}")
-    with open(file_path, "w") as f:
-        plt.savefig(file_path)
+    plt.savefig(file_path)
