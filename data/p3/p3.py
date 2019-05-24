@@ -5,6 +5,7 @@ import time
 import matplotlib.pyplot as plt
 import seaborn as sns
 import decimal
+from PIL import Image
 
 
 from sklearn.svm import LinearSVC, SVC
@@ -73,14 +74,22 @@ def plot_precomputed_data():
     test_error = []
     train_mis_error = []
     test_mis_error = []
-    for c in range(4, 14):
+    # for c in range(4, 14):
+    for c in range(0, 1):
         train_classif = load_precomputed_data(f'predictions_train_{c}')
         test_classif = load_precomputed_data(f'predictions_test_{c}')
-        train_mislabeled_classif = load_precomputed_data(f'predictionsW_train_{c}')
-        test_mislabeled_classif = load_precomputed_data(f'predictionsW_test_{c}')
+        # train_mislabeled_classif = load_precomputed_data(f'predictionsW_train_{c}')
+        # test_mislabeled_classif = load_precomputed_data(f'predictionsW_test_{c}')
 
         diff = train_y - train_classif
         train_error.append(sum(numpy.where(diff == 0, 0, 1))/len(train_y))
+        m1 = Image.fromarray(train_x[314].reshape((28,28)).todense()).convert('RGB')
+        m1.save('m1.png')
+        m1 = Image.fromarray(train_x[2823].reshape((28,28)).todense()).convert('RGB')
+        m1.save('m2.png')
+        m1 = Image.fromarray(train_x[4495].reshape((28,28)).todense()).convert('RGB')
+        m1.save('m3.png')
+        exit(1)
 
         diff = test_y - test_classif
         test_error.append(sum(numpy.where(diff == 0, 0, 1)) / len(test_y))

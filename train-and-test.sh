@@ -1,4 +1,4 @@
-declare -a cs=( 0.0001 )
+declare -a cs=( 0.0000000000001 0.000000000001 0.00000000001 0.0000000001 )
 for i in "${cs[@]}"
 do
     #./svm_learn.exe -c $i data/p3/train-01-images.svm model_$i
