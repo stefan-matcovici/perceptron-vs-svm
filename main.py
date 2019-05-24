@@ -7,6 +7,7 @@ if __name__ == "__main__":
 
     w, bias, support_vectors = fit(x, y)
     plot_separator(w, bias)
+    plot_svm_margin(w)
     plot_support_vectors(x, support_vectors)
 
     save_plot("separator-p1-a", "png")
@@ -18,6 +19,7 @@ if __name__ == "__main__":
 
     w, bias, support_vectors = fit(x, y)
     plot_separator(w, bias)
+    plot_svm_margin(w)
     plot_support_vectors(x, support_vectors)
 
     save_plot("separator-p1-b", "png")

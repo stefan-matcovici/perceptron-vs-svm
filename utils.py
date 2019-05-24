@@ -38,7 +38,17 @@ def plot_separator(w, bias):
     x = np.arange(limits[0], limits[1])
     plt.plot(x, x * slope + intercept, 'k-')
 
+    theta = np.degrees(np.arctan(slope))
+    plt.title(rf"$\theta = {theta:.2f}$")
+
     plt.legend(loc='best')
+
+
+def plot_svm_margin(w):
+    margin = 1.0 / np.linalg.norm(w)
+    title = plt.axes().get_title()
+
+    plt.title(rf"{title} margin={margin:2f}")
 
 
 def plot_support_vectors(x, support_vectors):
