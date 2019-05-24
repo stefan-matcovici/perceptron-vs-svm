@@ -1,10 +1,11 @@
+import re
+import math
+
 from utils import *
 
 if __name__ == "__main__":
-    points = read_p1("a")
-    plot_points(points)
-    save_plot("points-p1-a", "png")
-
-    points = read_p1("b")
-    plot_points(points)
-    save_plot("points-p1-b", "png")
+    for file in os.listdir('.'):
+        c = re.match(r'([a-zA-Z_]+)(0\.0+1)', file)
+        if c:
+            c_val = float(c.group(2))
+            os.rename(file, f'{c.group(1)}{abs(int(math.log10(c_val)))}')
