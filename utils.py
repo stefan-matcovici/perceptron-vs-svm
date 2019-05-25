@@ -77,5 +77,5 @@ def plot_support_vectors(x, support_vectors):
 
 def save_plot(filename, extension="eps"):
     file_path = os.path.join("plots", f"{filename}.{extension}")
-    with open(file_path, "w") as f:
+    with open(file_path, 'w') as f:
         plt.savefig(file_path)
