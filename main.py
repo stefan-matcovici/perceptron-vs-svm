@@ -1,4 +1,4 @@
-from perceptron import Perceptron, plot_decision_regions
+from perceptron import Perceptron
 from svm import fit
 from utils import *
 
@@ -22,7 +22,8 @@ if __name__ == "__main__":
     w = weights[1:]
 
     plot_separator(w, bias)
-    plot_perceptron_margin(x, w)
+    plot_perceptron_margin(x, w, perceptron.updates)
+    print(f"No support vectors: {sum(np.where(support_vectors == True, 1, 0))}")
 
     save_plot("perceptron-separator-p1-a", "png")
     plt.clf()
@@ -34,6 +35,7 @@ if __name__ == "__main__":
     plot_separator(w, bias)
     plot_svm_margin(w)
     plot_support_vectors(x, support_vectors)
+    print(f"No support vectors: {sum(np.where(support_vectors == True, 1, 0))}")
 
     save_plot("svm-separator-p1-b", "png")
     plt.clf()
@@ -46,7 +48,7 @@ if __name__ == "__main__":
     w = weights[1:]
 
     plot_separator(w, bias)
-    plot_perceptron_margin(x, w)
+    plot_perceptron_margin(x, w, perceptron.updates)
 
     save_plot("perceptron-separator-p1-b", "png")
     plt.clf()

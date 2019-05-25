@@ -51,15 +51,15 @@ def plot_svm_margin(w):
     plt.title(rf"{title} margin={margin:2f}")
 
 
-def plot_perceptron_margin(x, w):
+def plot_perceptron_margin(x, w, epochs):
     distances = [np.dot(entry, w) / np.linalg.norm(w) for entry in x]
 
-    min_positive_distance = min([d for d in distances if d > 0])
-    max_negative_distance = max([d for d in distances if d < 0])
+    min_positive_distance = abs(min([d for d in distances if d > 0]))
+    max_negative_distance = abs(max([d for d in distances if d < 0]))
 
     title = plt.axes().get_title()
 
-    plt.title(rf"{title} marginA={min_positive_distance:2f}, marginA={max_negative_distance:2f}")
+    plt.title(rf"{title} + margin {min_positive_distance:2f}, - margin {max_negative_distance:2f} epochs {epochs}")
 
 
 def plot_support_vectors(x, support_vectors):

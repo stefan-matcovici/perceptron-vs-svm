@@ -25,6 +25,7 @@ class Perceptron:
         self._errors = []
         self.learning_rate = learning_rate
         self.epochs = epochs
+        self.updates = 0
 
     def fit(self, X, Y):
         """
@@ -37,12 +38,18 @@ class Perceptron:
         # + 1 because we want to also have a free term (bias) that is not influenced by the training values necessarily.
         self._weights = np.zeros(1 + X.shape[1])
 
-        for _ in range(self.epochs):
+        Y = [0 if y == -1 else 1 for y in Y]
 
+        self.epochs = 0
+        fitted = False
+        while not fitted:
             errors = 0
+            self.epochs += 1
             # We now parse the training data set
             for entry, target in zip(X, Y):
                 classification_error = target - self.predict(entry)
+                if classification_error:
+                    self.updates += 1
 
                 # we compute now with how much we should adjust the weights
                 weights_update = self.learning_rate * classification_error
@@ -53,10 +60,11 @@ class Perceptron:
 
                 errors += np.where(classification_error == 0, 0, 1)
 
+            fitted = errors == 0
             self._errors.append(errors)
 
         return self._weights
 
     def predict(self, entry):
         # compute the predicted value
-        return np.where(np.dot(entry, self._weights[1:]) + self._weights[0] >= 0.0, 1, -1)
+        return np.where(np.dot(entry, self._weights[1:]) + self._weights[0] >= 0.0, 1, 0)
