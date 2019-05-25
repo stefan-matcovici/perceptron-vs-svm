@@ -6,11 +6,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import decimal
 from PIL import Image
-
+from sklearn.preprocessing import normalize
 
 from sklearn.svm import LinearSVC, SVC
-from sklearn.datasets import load_svmlight_file
-
+from sklearn.datasets import load_svmlight_file, dump_svmlight_file
 
 # create a new context for this task
 ctx = decimal.Context()
@@ -40,6 +39,14 @@ def train(data, labels, c):
     svm.fit(data, labels)
     print(f'Training time: {time.time() - start}')
     return svm
+
+
+def normalize_data():
+    with open('train-01-images.svm', 'rb') as f:
+        data, labels = load_svmlight_file(f, n_features=784)
+        data = normalize(data, axis=1, norm='l1')
+        with open('train-01-images-norm.svm', 'wb') as f1:
+            dump_svmlight_file(data, labels, f1, True)
 
 
 def plot_data(errors, c_vals=None):
@@ -78,10 +85,15 @@ def plot_precomputed_data():
     for c in range(0, 1):
         train_classif = load_precomputed_data(f'predictions_train_{c}')
         test_classif = load_precomputed_data(f'predictions_test_{c}')
-        # train_mislabeled_classif = load_precomputed_data(f'predictionsW_train_{c}')
-        # test_mislabeled_classif = load_precomputed_data(f'predictionsW_test_{c}')
+        train_mislabeled_classif = load_precomputed_data(f'predictionsW_train_{c}')
+        test_mislabeled_classif = load_precomputed_data(f'predictionsW_test_{c}')
 
         diff = train_y - train_classif
+        for misclassified_instance in numpy.argwhere(diff != 0):
+            m1 = Image.fromarray(train_x[misclassified_instance].reshape((28, 28)).todense()).convert('RGB')
+            m1.save(f'm{misclassified_instance}.png')
+
+        exit(0)
         train_error.append(sum(numpy.where(diff == 0, 0, 1))/len(train_y))
         m1 = Image.fromarray(train_x[314].reshape((28,28)).todense()).convert('RGB')
         m1.save('m1.png')
@@ -133,4 +145,5 @@ def svm_train_and_validate(train_file, test_file, data_type):
 if __name__ == '__main__':
     # svm_train_and_validate('train-01-images.svm', 'test-01-images.svm', 'simple')
     # svm_train_and_validate('train-01-images-W.svm', 'test-01-images.svm', 'mislabeled')
-    plot_precomputed_data()
+    # plot_precomputed_data()
+    normalize_data()
